@@ -12,13 +12,12 @@ const chits = require('./route/chits');
 
 
 
-mongoose
-  .connect( mongodb//127.0.0.1:27017/);
+mongoose.connect( 'mongodb://127.0.0.1:27017/')
   .then(() => console.log("DB Connection Successfull!"))
   .catch((err)=>{
       console.log(err);
   })
-  )
+  
     app.use(cors());
 
 const PORT = process.env.PORT || 5000;
