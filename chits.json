@@ -1,0 +1,123 @@
+[
+    {
+        "_id": 1,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 2,
+        "chit_value": 100000,
+        "months": 40,
+        "min_installment": 1750,
+        "max_installment": 2500,
+        "min_bid_payable": 65000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 3,
+        "chit_value": 100000,
+        "months": 25,
+        "min_installment": 3000,
+        "max_installment": 4000,
+        "min_bid_payable": 70000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 4,
+        "chit_value": 200000,
+        "months": 50,
+        "min_installment": 2600,
+        "max_installment": 4000,
+        "min_bid_payable": 120000,
+        "max_bid_payable": 190000
+    },{
+        "_id": 5,
+        "chit_value": 200000,
+        "months": 40,
+        "min_installment": 3500,
+        "max_installment": 5000,
+        "min_bid_payable": 130000,
+        "max_bid_payable": 190000
+    },
+    {
+        "_id": 6,
+        "chit_value": 300000,
+        "months": 50,
+        "min_installment": 3900,
+        "max_installment": 6000,
+        "min_bid_payable": 180000,
+        "max_bid_payable": 285000
+    },{
+        "_id": 7,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 8,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },{
+        "_id": 9,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 10,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },{
+        "_id": 11,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 12,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },{
+        "_id": 13,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    },
+    {
+        "_id": 14,
+        "chit_value": 100000,
+        "months": 50,
+        "min_installment": 1300,
+        "max_installment": 2000,
+        "min_bid_payable": 60000,
+        "max_bid_payable": 95000
+    }
+]
