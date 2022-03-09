@@ -46,16 +46,16 @@ router.post('/signup',(req,res,next)=>{
 })
 
  router.post('/login',(req,res,next)=>{
-     User.find({username:req.body.username})
+     User.find({email:req.body.email})
      .exec()
-     .then(user=>{
-         if(user.length < 1)
+     .then(email=>{
+         if(email.length < 1)
          {
              return res.status(401).json({
-                 msg:'user not exist'
+                 msg:'email not exist'
              })
          }      
-         bcrypt.compare(req.body.password,user[0].password,(err,result)=>{
+         bcrypt.compare(req.body.password,email.password,(err,result)=>{
              if(!result)
              {
                  return res.status(401).json({
@@ -65,14 +65,14 @@ router.post('/signup',(req,res,next)=>{
             if(result)
             {
                 const token = jwt.sign({
-                    username :user.username
+                    email :user.email
                 
                  },
                  'this is dummy text',
                 
                   );
                 res.status(200).json({
-                    username:user.username,
+                    email:user.email,
                     token :token
 
                 })
