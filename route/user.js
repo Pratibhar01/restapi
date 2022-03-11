@@ -5,12 +5,12 @@ const User = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const services = require('../services/render')
+// const services = require('../services/render')
 
-router.get('/',services.homeRoute);
+// router.get('/',services.homeRoute);
 
 
-router.get('/add-user',services.add_user);
+// router.get('/add-user',services.add_user);
 
 router.post('/signup',(req,res,next)=>{
     bcrypt.hash(req.body.password,10,(err,hash)=>{

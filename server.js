@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-// const mongoose = require("mongoose");
+require('dotenv').config();
+const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 // const morgan = require('morgan'); 
 // const cors = require('cors');
@@ -9,16 +10,16 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const HOSTNAME = process.env.HOSTNAME;
 
-// const userRoute = require('./route/user');
+const userRoute = require('./route/user');
 const chits = require('./route/chits');
 
 
 
-// mongoose.connect( 'mongodb://127.0.0.1:27017/')
-//   .then(() => console.log("DB Connection Successfull!"))
-//   .catch((err)=>{
-//       console.log(err);
-//   })
+mongoose.connect(process.env.DATABASE_URL)
+  .then(() => console.log("DB Connection Successfull!"))
+  .catch((err)=>{
+      console.log(err);
+  })
 
 // app.use(cors());
 
@@ -48,7 +49,7 @@ app.get('/hello', (req, res, next) => {
 
 
 
-// app.use('/user',userRoute);
+app.use('/user',userRoute);
 app.use('/chits', chits);
 
 app.use((req,res,next) =>{
