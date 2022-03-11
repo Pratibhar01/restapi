@@ -30,10 +30,10 @@ app.listen(PORT, HOSTNAME, ()=>{
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.use('/', (req, res, next) => {
-    res.statusCode = 200;
-    res.send('you visited server...');
-})
+// app.use('/', (req, res, next) => {
+//     res.statusCode = 200;
+//     res.send('you visited server...');
+// })
 
 app.get('/hello', (req, res, next) => {
     res.statusCode = 200;
