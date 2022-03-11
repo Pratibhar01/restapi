@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 // const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const HOSTNAME = process.env.HOSTNAME;
 
 const userRoute = require('./route/user');
@@ -15,7 +15,11 @@ const chits = require('./route/chits');
 
 
 
-mongoose.connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL, {
+    dbName: process.env.DATABASE_NAME,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
   .then(() => console.log("DB Connection Successfull!"))
   .catch((err)=>{
       console.log(err);
