@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const HOSTNAME = process.env.HOSTNAME;
 
 // const userRoute = require('./route/user');
-// const chits = require('./route/chits');
+const chits = require('./route/chits');
 
 
 
@@ -49,7 +49,7 @@ app.get('/hello', (req, res, next) => {
 
 
 // app.use('/user',userRoute);
-// app.use('/chits', chits);
+app.use('/chits', chits);
 
 app.use((req,res,next) =>{
     res.status(404).json({
