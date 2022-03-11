@@ -3,7 +3,7 @@ const app = express();
 // const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 // const morgan = require('morgan'); 
-const cors = require('cors');
+// const cors = require('cors');
 // const path = require('path');
 
 const PORT = process.env.PORT || 3000;
@@ -20,7 +20,7 @@ const HOSTNAME = process.env.HOSTNAME;
 //       console.log(err);
 //   })
 
-app.use(cors());
+// app.use(cors());
 
 app.listen(PORT, HOSTNAME, ()=>{
     console.log("Backend server is running! " + PORT);
