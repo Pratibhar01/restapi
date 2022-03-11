@@ -53,7 +53,7 @@ app.get('/hello', (req, res, next) => {
 
 
 
-app.use('/user',userRoute);
+// app.use('/user',userRoute);
 app.use('/chits', chits);
 
 app.use((req,res,next) =>{
