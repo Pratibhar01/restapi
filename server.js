@@ -35,7 +35,7 @@ app.use('/', (req, res, next) => {
     res.send('you visited server...');
 })
 
-app.use('/hello', (req, res, next) => {
+app.get('/hello', (req, res, next) => {
     res.statusCode = 200;
     res.send('hello from server');
 })
