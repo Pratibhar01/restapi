@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e91eba6f-1734-496e-a125-274a9eff1167/resourceGroups/suneel-001-app-service/providers/Microsoft.Web/sites/digitalchits-backend-dev",
+    "appService.deploySubpath": "."
+}
