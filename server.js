@@ -1,29 +1,29 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 // const morgan = require('morgan'); 
 // const cors = require('cors');
 // const path = require('path');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const HOSTNAME = process.env.HOSTNAME;
 
-// const userRoute = require('./route/user');
+const userRoute = require('./route/user');
 const chits = require('./route/chits');
 
 
 
-// mongoose.connect(process.env.DATABASE_URL, {
-//     dbName: process.env.DATABASE_NAME,
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-//   .then(() => console.log("DB Connection Successfull!"))
-//   .catch((err)=>{
-//       console.log(err);
-//   })
+mongoose.connect(process.env.DATABASE_URL, {
+    dbName: process.env.DATABASE_NAME,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+  .then(() => console.log("DB Connection Successfull!"))
+  .catch((err)=>{
+      console.log(err);
+  })
 
 // app.use(cors());
 
@@ -53,7 +53,7 @@ app.get('/hello', (req, res, next) => {
 
 
 
-// app.use('/user',userRoute);
+app.use('/user',userRoute);
 app.use('/chits', chits);
 
 app.use((req,res,next) =>{
