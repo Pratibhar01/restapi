@@ -46,16 +46,16 @@ router.post('/signup',(req,res,next)=>{
 })
 
  router.post('/login',(req,res,next)=>{
-     User.find({email:req.body.email})
+     User.findOne({email:req.body.email})
      .exec()
      .then(email=>{
-         if(email.length < 1)
+         if(email)
          {
              return res.status(401).json({
                  msg:'email not exist'
              })
          }      
-         bcrypt.compare(req.body.password,email.password,(err,result)=>{
+         bcrypt.compare(req.body.password,user.password,(err,result)=>{
              if(!result)
              {
                  return res.status(401).json({
