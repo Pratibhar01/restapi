@@ -64,14 +64,22 @@ router.post('/signup',(req,res,next)=>{
      User.findOne({email:req.body.email})
      .exec()
      .then(user=>{
+
          console.log('result:', user);
          if(user.length < 1)
+
+         if(!user)
+
          {
              return res.status(401).json({
                  msg:'email not exist'
              })
          }      
+
          bcrypt.compare(req.body.password,user.password,(err,result)=>{
+
+         bcrypt.compare(req.body.password, user.password,(err,result)=>{
+
              if(!result)
              {
                  return res.status(401).json({
