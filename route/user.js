@@ -19,6 +19,7 @@ router.post('/signup',(req,res,next)=>{
     .then(user =>{
         if(user.length >=1){
             return res.status(200).json({
+                status:"10001",
                 message:'mail exists'
             })
         }else{
