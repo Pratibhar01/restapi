@@ -20,7 +20,7 @@ router.post('/signup',(req,res,next)=>{
         if(user.length >=1){
             return res.status(200).json({
                 status:"10001",
-                message:'mail exists'
+                msg:'mail exists'
             })
         }else{
             bcrypt.hash(req.body.password,10,(err,hash)=>{
@@ -45,7 +45,7 @@ router.post('/signup',(req,res,next)=>{
                    console.log(result);
                    res.status(200).json({
                        status:"10002",
-                       message:'User created'
+                       msg:'User created'
                    });
                })
                .catch(err=>{
@@ -92,9 +92,11 @@ router.post('/signup',(req,res,next)=>{
                   );
                 res.status(200).json({
                     status:"10005",
+                    msg:"login successful",
+                    data:{
                     email:user.email,
                     token :token
-
+                    }
                 })
             }
          })
