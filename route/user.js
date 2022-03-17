@@ -44,6 +44,7 @@ router.post('/signup',(req,res,next)=>{
                .then(result=>{
                    console.log(result);
                    res.status(200).json({
+                       status:"10002",
                        message:'User created'
                    });
                })
@@ -67,14 +68,16 @@ router.post('/signup',(req,res,next)=>{
          console.log('result:', user);
          if(user.length < 1)
          {
-             return res.status(401).json({
+             return res.status(200).json({
+                 status:"10003",
                  msg:'email not exist'
              })
          }      
          bcrypt.compare(req.body.password,user.password,(err,result)=>{
              if(!result)
              {
-                 return res.status(401).json({
+                 return res.status(200).json({
+                     status:"10004",
                      msg:'password matching fail'
                  })
              }
@@ -88,6 +91,7 @@ router.post('/signup',(req,res,next)=>{
                 
                   );
                 res.status(200).json({
+                    status:"10005",
                     email:user.email,
                     token :token
 
