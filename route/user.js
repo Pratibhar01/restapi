@@ -61,8 +61,7 @@ router.post('/signup',(req,res,next)=>{
    
 })
 router.post('/login' ,(req, res, next) => {
-   console.log(req.file);
-    User.findOne({ email: req.body.email })
+User.findOne({ email: req.body.email })
         .exec()
         .then(user => {
             if(!user) {
