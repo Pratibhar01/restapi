@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
+const upload = multer({dest:'uploads/'});
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -60,7 +62,8 @@ router.post('/signup',(req,res,next)=>{
     })
    
 })
-router.post('/login', (req, res, next) => {
+router.post('/login',upload.single('userImage') ,(req, res, next) => {
+   console.log(req.file);
     User.findOne({ email: req.body.email })
         .exec()
         .then(user => {
@@ -88,8 +91,11 @@ router.post('/login', (req, res, next) => {
                         status:"10005",
                         msg:"login successful",
                         data:{
+                        _id: new mongoose.Types.ObjectId,
+                        username:user.username,
                         email: user.email,
-                        token: token
+                        token: token,
+                        profilePicUrl:"https://picsum.photos/id/104/367/267"
                         }
                     })
                 }

@@ -15,7 +15,7 @@ const chits = require('./route/chits');
 
 
 
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(  process.env.DATABASE_URL,{
     dbName: process.env.DATABASE_NAME,
     useNewUrlParser: true,
     useUnifiedTopology: true
