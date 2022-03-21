@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const multer = require('multer');
-const upload = multer({dest:'uploads/'});
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -62,7 +60,7 @@ router.post('/signup',(req,res,next)=>{
     })
    
 })
-router.post('/login',upload.single('userImage') ,(req, res, next) => {
+router.post('/login' ,(req, res, next) => {
    console.log(req.file);
     User.findOne({ email: req.body.email })
         .exec()
