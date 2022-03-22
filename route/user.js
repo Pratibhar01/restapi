@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const app = require('../server');
+
 
 
 require('dotenv').config()
@@ -62,6 +64,8 @@ router.post('/signup',(req,res,next)=>{
     })
    
 })
+
+
 router.post('/login' ,(req, res, next) => {
 User.findOne({ email: req.body.email })
         .exec()
@@ -81,26 +85,14 @@ User.findOne({ email: req.body.email })
                     })
                 }
                 if (result) {
+                   const email = req.body.email
+                   const user ={email}
                    
-                    const accessToken = jwt.sign
-                     ({
-                        email:user.email
-                    },
-                    'this is dummy text',
-                    {
-                        expiresIn:"15m"
-                    }
-                    ); 
+                    const accessToken = generateAccessToken(user)
+                    const refreshToken = generateRefreshToken(user)
+                    
+                   'this is dummy text',
 
-                    const refreshToken =jwt.sign({
-                        email:user.email
-                    },
-                    'this is dummy text',
-                    {
-                        expiresIn:"7d"
-                    }
-                    );
-                       
                     res.status(200).json({
                         status:"10005",
                         msg:"login successful",
@@ -113,7 +105,13 @@ User.findOne({ email: req.body.email })
                         profilePicUrl:"https://picsum.photos/id/104/367/267"
                         }
                     })
-            }
+                    function generateAccessToken(user){
+                        return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
+                    }
+                    function generateRefreshToken(user){
+                        return jwt.sign(user,process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
+                    }
+                }
             })
         }).catch(err => {
                 res.status(500).json({
