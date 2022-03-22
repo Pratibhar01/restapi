@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 
+require('dotenv').config()
+
 // const services = require('../services/render')
 
 // router.get('/',services.homeRoute);
@@ -79,23 +81,39 @@ User.findOne({ email: req.body.email })
                     })
                 }
                 if (result) {
-                    const token = jwt.sign({
-                        email: user.email
+                   
+                    const accessToken = jwt.sign
+                     ({
+                        email:user.email
                     },
                     'this is dummy text',
+                    {
+                        expiresIn:"15m"
+                    }
+                    ); 
+
+                    const refreshToken =jwt.sign({
+                        email:user.email
+                    },
+                    'this is dummy text',
+                    {
+                        expiresIn:"7d"
+                    }
                     );
+                       
                     res.status(200).json({
                         status:"10005",
                         msg:"login successful",
-                        data:{
+                     data:{
                         _id: new mongoose.Types.ObjectId,
                         username:user.username,
                         email: user.email,
-                        token: token,
+                        accessToken:accessToken,
+                        refreshToken:refreshToken,
                         profilePicUrl:"https://picsum.photos/id/104/367/267"
                         }
                     })
-                }
+            }
             })
         }).catch(err => {
                 res.status(500).json({
