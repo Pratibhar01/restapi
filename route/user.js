@@ -5,10 +5,18 @@ const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const checkAuth = require('../middleware/check-auth')
 
-
+const passport = require('passport')
+const initializePassport = require('../passport-config');
+initializePassport(
+    passport,
+    email =>User.find(user => user.email === email)
+)
 
 require('dotenv').config()
+
+
 
 // const services = require('../services/render')
 
@@ -17,8 +25,18 @@ require('dotenv').config()
 
 // router.get('/add-user',services.add_user);
 
+router.get('/checkAuth',checkAuth,(_req,res,next)=>{
+    User.findOne()
+    .exec()
+    .then(result =>{
+        res.status(200).json({
+            User:result
+        })
+    })
+})
+
 router.post('/signup',(req,res,next)=>{
-    User.find({email:req.body.email})
+    User.findOne({email:req.body.email})
     .exec()
     .then(user =>{
         if(user.length >=1){
@@ -84,9 +102,13 @@ User.findOne({ email: req.body.email })
                         msg: 'password matching fail'
                     })
                 }
-           
-                const accessToken = generateAccessToken(user)
-                const refreshToken = generateRefreshToken(user)
+
+                if(result){
+                    const username =req.body.username
+                    const user = {name:username}
+
+               const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)
+               const refreshToken = jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
                 
                 
                         res.status(200).json({
@@ -102,18 +124,21 @@ User.findOne({ email: req.body.email })
                         }
                         })
 
-                    function generateAccessToken(user){
-                        return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
-                    }
-                    function generateRefreshToken(user){
-                        return jwt.sign(user,process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
-                    }
+                        function generateAccessToken(user){
+                            return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
+                        }
+                        function generateRefreshToken(user){
+                            return jwt.sign(user,process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
+                        }
+                      
+                }
             })
         }).catch(err => {
                 res.status(500).json({
                     err: err
                 })
             })
+          
 })
     
 
