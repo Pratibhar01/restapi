@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const app = require('../server');
+
 
 
 
@@ -84,16 +84,12 @@ User.findOne({ email: req.body.email })
                         msg: 'password matching fail'
                     })
                 }
-                if (result) {
-                   const email = req.body.email
-                   const user ={email}
-                   
-                    const accessToken = generateAccessToken(user)
-                    const refreshToken = generateRefreshToken(user)
-                    
-                   'this is dummy text',
-
-                    res.status(200).json({
+           
+                const accessToken = generateAccessToken(user)
+                const refreshToken = generateRefreshToken(user)
+                
+                
+                        res.status(200).json({
                         status:"10005",
                         msg:"login successful",
                      data:{
@@ -104,14 +100,14 @@ User.findOne({ email: req.body.email })
                         refreshToken:refreshToken,
                         profilePicUrl:"https://picsum.photos/id/104/367/267"
                         }
-                    })
+                        })
+
                     function generateAccessToken(user){
                         return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
                     }
                     function generateRefreshToken(user){
                         return jwt.sign(user,process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
                     }
-                }
             })
         }).catch(err => {
                 res.status(500).json({
@@ -119,5 +115,9 @@ User.findOne({ email: req.body.email })
                 })
             })
 })
+    
+
+
+  
 
 module.exports = router;
