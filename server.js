@@ -23,8 +23,9 @@ const session = require('express-session')
 
 
 mongoose.connect(  process.env.DATABASE_URL,{
-    dbName: process.env.DATABASE_NAME,
+    //dbName: process.env.DATABASE_NAME,
     useNewUrlParser: true,
+    //useCreateIndex: true
     useUnifiedTopology: true
 })
   .then(() => console.log("DB Connection Successfull!"))

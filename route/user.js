@@ -7,30 +7,27 @@ const jwt = require('jsonwebtoken');
 
 const checkAuth = require('../middleware/check-auth')
 
-const passport = require('passport')
-const initializePassport = require('../passport-config');
-initializePassport(
-    passport,
-    email =>User.find(user => user.email === email)
-)
+//const passport = require('passport')
+//const initializePassport = require('../passport-config');
+//initializePassport(
+//    passport,
+//    email =>User.find(user => user.email === email)
+//)
 
 require('dotenv').config()
 
 
 
-// const services = require('../services/render')
 
-// router.get('/',services.homeRoute);
-
-
-// router.get('/add-user',services.add_user);
-
-router.get('/checkAuth',checkAuth,(_req,res,next)=>{
-    User.findOne()
+router.get('/checkAuths',checkAuth,(req,res)=>{
+    console.log(req.user._id,"asdadadsd")
+    
+    User.findOne({ _id:mongoose.Types.ObjectId(req.user._id)})
     .exec()
-    .then(result =>{
-        res.status(200).json({
-            User:result
+    .then(Users=>{
+        console.log(Users,"Sdfsfdsfds")
+        return res.status(200).json({
+            "User":Users
         })
     })
 })
@@ -39,7 +36,7 @@ router.post('/signup',(req,res,next)=>{
     User.findOne({email:req.body.email})
     .exec()
     .then(user =>{
-        if(user.length >=1){
+        if(user){
             return res.status(200).json({
                 status:"10001",
                 msg:'mail exists'
@@ -85,7 +82,7 @@ router.post('/signup',(req,res,next)=>{
 
 
 router.post('/login' ,(req, res, next) => {
-User.findOne({ email: req.body.email })
+    User.findOne({ email: req.body.email })
         .exec()
         .then(user => {
             if(!user) {
@@ -104,33 +101,25 @@ User.findOne({ email: req.body.email })
                 }
 
                 if(result){
-                    const username =req.body.username
-                    const user = {name:username}
-
-               const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)
-               const refreshToken = jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
+                    
+                    let accessToken = jwt.sign({"user_id":user._id,"type":"access"}, process.env.ACCESS_TOKEN_SECRET, {'algorithm': 'HS256'},{
+		        		expiresIn: "1d"
+		        	})
+			        let refreshToken = jwt.sign({"user_id":user._id,"type":"refresh"}, process.env.REFRESH_TOKEN_SECRET, {'algorithm': 'HS256'},{
+				        expiresIn: "1d"
+			        })
                 
-                
-                        res.status(200).json({
+                    res.status(200).json({
                         status:"10005",
                         msg:"login successful",
                      data:{
-                        _id: new mongoose.Types.ObjectId,
                         username:user.username,
                         email: user.email,
                         accessToken:accessToken,
                         refreshToken:refreshToken,
                         profilePicUrl:"https://picsum.photos/id/104/367/267"
                         }
-                        })
-
-                        function generateAccessToken(user){
-                            return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
-                        }
-                        function generateRefreshToken(user){
-                            return jwt.sign(user,process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d"})
-                        }
-                      
+                    })
                 }
             })
         }).catch(err => {

@@ -1,34 +1,46 @@
 const jwt = require('jsonwebtoken');
 const user = require('../model/user');
 const app = require('../server');
+const mongoose=require('mongoose')
+function isAuthenticated (req, res, next) {
 
-module.exports = (req,res,next)=>{
-app.get('/posts',authenticateToken,(req,res,next)=>{
-    res.json(posts.filter(post => post.email === req.email))
-})
+    if (typeof req.headers.authorization !== "undefined") {
+        
+        let token = req.headers.authorization.split(" ")[1];
+        
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, { algorithm: "HS256" }, async(err, decodedToken) => {
 
-   function authenticateToken(req,res,next){
-       const authHeader = req.headers['authorization']
-       const token =  authHeader && authHeader.split(' ')[1]
-       if(tokem ==null) return res.sendStatus(401)
+            
+            if (err) {  
 
-       jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-           if(err) return res.sendStstud=s(403)
-           req.user = user
-           next()
-       })
-   }
+                res.status(401).json({ 
+                    status:"10006",
+                    msg: "Not Authorized" });
 
-   app.post('/token',(req,res,() =>{
-       const refreshToken = req.body.token
-       if(refreshToken == null) return res.sendStatus(401)
-       if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
-       jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,(err)=>{
-           if(err) return res.sendStatus(403)
-          })
-   })
-   )
+            }else{
+        
+                const { user_id,type } = decodedToken;
+                
+                const users= await user.findOne({
+                    _id:mongoose.Types.ObjectId(user_id)
+                })
+                if (users && type==="access"){
+                    req.user=users
+                
+                    return next();
+                }else{
+                    res.status(401).json({ msg: "Not Authorized" });
+                }
+                
+            }
 
+            
+        });
+    } else {
+        
+        res.status(401).json({ msg: "Not Authorized" });
+
+    }
 }
 
-module.exports = user
+module.exports = isAuthenticated;
