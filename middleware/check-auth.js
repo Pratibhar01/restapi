@@ -12,7 +12,7 @@ function isAuthenticated (req, res, next) {
 
             
             if (err) {  
-
+ 
                 res.status(401).json({ 
                     status:"10006",
                     msg: "Not Authorized" });
